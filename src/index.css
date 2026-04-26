@@ -43,3 +43,58 @@
   align-items: center;
   justify-content: center;
 }
+.post-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 40px 20px; /* Space from the edges */
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  pointer-events: none; /* Allows clicks to pass through to the video */
+}
+
+.post-description {
+  font-size: var(--body-size);
+  max-width: 80%; /* Keeps text from hitting the side buttons */
+  margin-bottom: 10px;
+  pointer-events: auto; /* Makes text selectable/clickable if needed */
+}
+.post-video {
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.post-video.is-loaded {
+  opacity: 1;
+}
+/* index.css */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: center; /* Centers our icon */
+  align-items: center;
+  z-index: 1000;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(to bottom, rgba(8, 9, 10, 0.7), transparent);
+  backdrop-filter: blur(5px);
+}
+
+.navbar--hidden {
+  transform: translateY(-100%); /* Slides up out of view */
+}
+
+.nav-logo {
+  font-family: var(--font-main);
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  text-shadow: 0 0 10px var(--accent-glow);
+  cursor: pointer;
+}
