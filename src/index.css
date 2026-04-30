@@ -98,3 +98,130 @@
   text-shadow: 0 0 10px var(--accent-glow);
   cursor: pointer;
 }
+/* Auth Specific Layout */
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, #1a1a1a 0%, var(--bg-deep) 100%);
+}
+
+.glass-pillar {
+  width: 100%;
+  max-width: 400px;
+  padding: 60px 40px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.auth-header h1 {
+  letter-spacing: 8px;
+  margin-bottom: 10px;
+}
+
+.auth-header p {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 40px;
+}
+
+/* Floating Input Architecture */
+.input-group {
+  position: relative;
+  margin-bottom: 35px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  font-family: var(--font-main);
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input-group label {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+  transition: 0.3s ease all;
+}
+
+/* Label floats up when input is focused or has text */
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+  top: -15px;
+  font-size: 0.6rem;
+  color: white;
+  letter-spacing: 2px;
+}
+
+.auth-toggle {
+  margin-top: 30px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+#switch-mode {
+  background: none;
+  border: none;
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: var(--font-main);
+  margin-left: 5px;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-brand a {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    text-decoration: none;
+    color: #000;
+}
+
+.nav-brand span { color: #ff3e3e; }
+
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+
+.nav-links a { text-decoration: none; color: #444; font-weight: 500; }
+
+.upload-btn, .signup-btn {
+    background: #000;
+    color: #fff !important;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.upload-btn:hover { background: #333; }
+
+.user-greet { font-weight: 600; color: #888; font-size: 0.9rem; }
+
+.logout-link {
+    background: none;
+    border: none;
+    color: #ff3e3e;
+    cursor: pointer;
+    font-weight: 500;
+}
