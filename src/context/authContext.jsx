@@ -25,6 +25,22 @@ export const AuthProvider = ({ children }) => {
         checkAuth();
     }, []);
 
+    const registerUser = async (username, email, password) => {
+        try {
+            const data = await apiRequest('/auth/register', {
+                method: 'POST',
+                body: JSON.stringify({ username, email, password }),
+            });
+
+            // Auto-login after successful registration
+            setUser(data.user || data);
+
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.message };
+        }
+    };
+
     // 🔐 Login
     const loginUser = async (username, password) => {
         try {

@@ -32,25 +32,48 @@ const AuthPage = () => {
     };
 
     return (
-        <div className="auth-page">
+        <div className="auth-page app-container">
             <form onSubmit={handleSubmit} className="glass-pillar">
+                
+                <header className="auth-header">
+                    <h1>LOGIN</h1>
+                    <p>ENTER YOUR CREDENTIALS TO ACCESS THE CORE</p>
+                </header>
 
-                <h2>Login</h2>
+                {/* Username Group */}
+                <div className="input-group">
+                    <input
+                        name="username"
+                        type="text"
+                        required
+                        placeholder=" " 
+                        onChange={handleChange}
+                        value={form.username}
+                    />
+                    <label>USERNAME</label>
+                </div>
 
-                <input
-                    name="username"
-                    placeholder="Username"
-                    onChange={handleChange}
-                />
+                {/* Password Group */}
+                <div className="input-group">
+                    <input
+                        name="password"
+                        type="password"
+                        required
+                        placeholder=" "
+                        onChange={handleChange}
+                        value={form.password}
+                    />
+                    <label>PASSWORD</label>
+                </div>
 
-                <input
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                />
+                <button type="submit">LOGIN</button>
 
-                <button type="submit">Login</button>
+                <div className="auth-toggle">
+                    DON'T HAVE AN ACCOUNT? 
+                    <button type="button" id="switch-mode" onClick={() => navigate('/signup')}>
+                        SIGN UP
+                    </button>
+                </div>
             </form>
         </div>
     );

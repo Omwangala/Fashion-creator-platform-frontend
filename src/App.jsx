@@ -1,12 +1,12 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
 import { AuthProvider } from './context/AuthContext';
 
 // Pages
 import LandingPage from './Pages/LandingPage/LandingPage';
-import AuthPage from './Pages/AuthPage';
-//import Upload from './pages/Upload';
+import AuthPage from './Pages/AuthPage'; // This is your Login
+import SignupPage from './Pages/SignupPage'; // Create this file next
 
 // Protected Route
 import ProtectedRoute from './components/ProtectedRoute';
@@ -18,13 +18,17 @@ function App() {
         <div className="app-container">
           <Routes>
             
-            {/* Landing has Navbar INSIDE */}
+            {/* Landing Page */}
             <Route path="/" element={<LandingPage />} />
 
-            {/* Auth page has NO navbar */}
-            <Route path="/auth" element={<AuthPage />} />
+            {/* Split Auth Routes */}
+            <Route path="/login" element={<AuthPage />} />
+            <Route path="/signup" element={<SignupPage />} />
 
-            {/* Protected page
+            {/* Legacy redirect: if anyone hits /auth, send them to /login */}
+            <Route path="/auth" element={<Navigate to="/login" replace />} />
+
+            {/* Example Protected Page (Uncomment when ready)
             <Route 
               path="/upload" 
               element={

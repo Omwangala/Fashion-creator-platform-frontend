@@ -225,3 +225,31 @@
     cursor: pointer;
     font-weight: 500;
 }
+/* Update your existing button style or add this */
+.glass-pillar button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.05); /* Very subtle transparent white */
+  border: var(--glass-border); /* Uses your 1px solid rgba(255, 255, 255, 0.1) */
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-pillar button[type="submit"]:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px var(--accent-glow); /* Uses your rgba(255, 255, 255, 0.15) */
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.glass-pillar button[type="submit"]:active {
+  transform: translateY(0);
+}

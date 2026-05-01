@@ -7,15 +7,17 @@ const ProtectedRoute = ({ children }) => {
     // ⏳ Wait until auth check finishes
     if (loading) {
         return (
-            <div style={{ color: 'white', textAlign: 'center', marginTop: '50px' }}>
-                Loading...
+            <div className="app-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <div style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', letterSpacing: '4px' }}>
+                    INITIALIZING CORE...
+                </div>
             </div>
         );
     }
 
-    // 🚫 Not logged in → redirect
+    // 🚫 Not logged in → redirect to login
     if (!isAuthenticated) {
-        return <Navigate to="/auth" replace />;
+        return <Navigate to="/login" replace />;
     }
 
     // ✅ Logged in → allow access
