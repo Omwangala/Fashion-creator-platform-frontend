@@ -3,22 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from "../../context/AuthContext"; 
 
 const Navbar = () => {
-    const { user, logoutUser } = useAuth();
+    const { user, isAuthenticated, logoutUser } = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = async () => {
-        try {
-            await logoutUser();
-            navigate('/login');
-        } catch (error) {
-            console.error("Logout failed", error);
-        }
+        await logoutUser();
+        navigate('/auth'); // ✅ fixed
     };
 
     return (
         <AppBar position="sticky" sx={{ bgcolor: '#fff', color: '#000', boxShadow: 1 }}>
             <Toolbar>
-                {/* BRAND LOGO */}
+
+                {/* BRAND */}
                 <Typography 
                     variant="h5" 
                     component={Link} 
@@ -35,42 +32,56 @@ const Navbar = () => {
                 </Typography>
 
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    {/* HOME LINK */}
+                    
+                    {/* HOME */}
                     <Button component={Link} to="/" color="inherit" sx={{ fontWeight: 600, mx: 1 }}>
                         Home
                     </Button>
 
-                    {user ? (
-                        /* 👗 AUTHENTICATED VIEW - Shown when logged in */
+                    {isAuthenticated ? (
                         <>
-                            <Button component={Link} to="/upload" color="inherit" sx={{ fontWeight: 600, mx: 1 }}>
+                            {/* 🔒 AUTH VIEW */}
+                            <Button 
+                                component={Link} 
+                                to="/upload" 
+                                color="inherit" 
+                                sx={{ fontWeight: 600, mx: 1 }}
+                            >
                                 Upload Look
                             </Button>
+
                             <Typography sx={{ mx: 2, fontWeight: 500, color: '#666' }}>
-                                Hi, {user.username}
+                                Hi, {user?.username || 'User'}
                             </Typography>
+
                             <Button 
                                 onClick={handleLogout} 
                                 variant="outlined" 
-                                sx={{ borderColor: '#000', color: '#000', borderRadius: 0, ml: 1 }}
+                                sx={{ 
+                                    borderColor: '#000', 
+                                    color: '#000', 
+                                    borderRadius: 0, 
+                                    ml: 1 
+                                }}
                             >
                                 Logout
                             </Button>
                         </>
                     ) : (
-                        /* 🔒 GUEST VIEW - Shown when logged out */
                         <>
+                            {/* 🌐 GUEST VIEW */}
                             <Button 
                                 component={Link} 
-                                to="/login" 
+                                to="/auth" 
                                 color="inherit" 
                                 sx={{ fontWeight: 600, mx: 1 }}
                             >
                                 Log In
                             </Button>
+
                             <Button
                                 component={Link}
-                                to="/signup"
+                                to="/auth"
                                 variant="contained"
                                 sx={{ 
                                     bgcolor: '#000', 

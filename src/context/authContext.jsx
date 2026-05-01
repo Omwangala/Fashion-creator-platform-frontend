@@ -7,42 +7,83 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // 🕵️ Check if user is already logged in when the app starts
+    // 🕵️ Check if user is already logged in when app loads
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                // You'll need a simple GET /auth/me endpoint in your backend 
-                // that returns the user object if the cookie is valid
                 const data = await apiRequest('/auth/me');
-                setUser(data);
+
+                // ✅ Handle different backend response shapes safely
+                setUser(data.user || data);
             } catch (error) {
                 setUser(null);
             } finally {
                 setLoading(false);
             }
         };
+
         checkAuth();
     }, []);
 
+    // 🔐 Login
     const loginUser = async (username, password) => {
-        const data = await apiRequest('/auth/login', {
-            method: 'POST',
-            body: JSON.stringify({ username, password }),
-        });
-        setUser(data.user); // Assuming your login returns { user: {...} }
+        try {
+            const data = await apiRequest('/auth/login', {
+                method: 'POST',
+                body: JSON.stringify({ username, password }),
+            });
+
+            // ✅ Flexible handling
+            setUser(data.user || data);
+
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.message };
+        }
     };
 
+    // 🚪 Logout
     const logoutUser = async () => {
-        await apiRequest('/auth/logout', { method: 'POST' });
-        setUser(null);
+        try {
+            await apiRequest('/auth/logout', { method: 'POST' });
+        } catch (error) {
+            // even if backend fails, we still clear user
+        } finally {
+            setUser(null);
+        }
+    };
+
+    // 🔄 Manual refresh (useful after profile update, etc.)
+    const refreshUser = async () => {
+        try {
+            const data = await apiRequest('/auth/me');
+            setUser(data.user || data);
+        } catch {
+            setUser(null);
+        }
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, loginUser, logoutUser }}>
+        <AuthContext.Provider
+            value={{
+                user,
+                loading,
+                isAuthenticated: !!user,
+                loginUser,
+                logoutUser,
+                refreshUser,
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );
 };
 
-// Custom hook for easy access
-export const useAuth = () => useContext(AuthContext);
+// Custom hook
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error('useAuth must be used within AuthProvider');
+    }
+    return context;
+};

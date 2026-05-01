@@ -1,21 +1,44 @@
-import { useState } from 'react'
-import { BrowserRouter } from 'react-router-dom'; // <--- Add this line!
-import './App.css'
-import LandingPage from './Pages/LandingPage/LandingPage'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './App.css';
+
 import { AuthProvider } from './context/AuthContext';
+
+// Pages
+import LandingPage from './Pages/LandingPage/LandingPage';
+import AuthPage from './Pages/AuthPage';
+//import Upload from './pages/Upload';
+
+// Protected Route
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <div className="app-container">
-          <LandingPage />
-          <div className="ticks"></div>
-          <section id="spacer"></section>
+          <Routes>
+            
+            {/* Landing has Navbar INSIDE */}
+            <Route path="/" element={<LandingPage />} />
+
+            {/* Auth page has NO navbar */}
+            <Route path="/auth" element={<AuthPage />} />
+
+            {/* Protected page
+            <Route 
+              path="/upload" 
+              element={
+                <ProtectedRoute>
+                  <Upload />
+                </ProtectedRoute>
+              } 
+            /> */}
+
+          </Routes>
         </div>
       </BrowserRouter>
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;
