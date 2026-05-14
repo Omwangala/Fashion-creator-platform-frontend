@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const SignupPage = () => {
     const { registerUser } = useAuth();
     const auth = useAuth();
-    console.log("Full Auth Object:", auth); // Assuming your context has this
+    
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
@@ -20,13 +20,11 @@ const SignupPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Type of registerUser:", typeof auth.registerUser);
         const res = await registerUser(form.username, form.email, form.password);
 
-        // 
-        if (typeof auth.registerUser !== 'function') {
-        alert("Critical Error: registerUser is missing from Context!");
-        return;
+        if (res.success === false) {
+            alert(res.message);
+            return;
         }
         navigate('/');
     };

@@ -29,7 +29,9 @@ export const AuthProvider = ({ children }) => {
         try {
             const data = await apiRequest('/auth/register', {
                 method: 'POST',
-                body: JSON.stringify({ username, email, password }),
+                body: JSON.stringify({ Username: username, 
+                Email: email, 
+                Password: password }),
             });
 
             // Auto-login after successful registration
@@ -97,10 +99,10 @@ export const AuthProvider = ({ children }) => {
 };
 
 // Custom hook
-export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error('useAuth must be used within AuthProvider');
-    }
-    return context;
-};
+// export const useAuth = () => {
+//     const context = useContext(AuthContext);
+//     if (!context) {
+//         throw new Error('useAuth must be used within AuthProvider');
+//     }
+//     return context;
+// };
