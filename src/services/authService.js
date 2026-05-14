@@ -18,3 +18,12 @@ export const createPost = async (formData) => {
         headers: {}, // Remove the default application/json
     });
 };
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error('useAuth must be used within AuthProvider');
+    }
+    // ADD THIS LOG
+    console.log("Current Context Value:", Object.keys(context)); 
+    return context;
+};
