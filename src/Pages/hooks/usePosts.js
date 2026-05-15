@@ -6,21 +6,19 @@ export const usePosts = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const loadPosts = async () => {
-    try {
-      setLoading(true);
-      const data = await postService.getAllPosts();
-      setPosts(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    loadPosts();
+    const fetchFromVault = async () => {
+      try {
+        const data = await postService.getAllPosts(); // Hits GET api/posts implicitly
+        setPosts(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFromVault();
   }, []);
 
-  return { posts, loading, error, refresh: loadPosts };
+  return { posts, setPosts, loading, error };
 };

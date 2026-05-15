@@ -253,3 +253,14 @@
 .glass-pillar button[type="submit"]:active {
   transform: translateY(0);
 }
+.skeleton-post {
+  height: 100vh;
+  background: linear-gradient(90deg, #08090a 25%, #1a1a1a 50%, #08090a 75%);
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
